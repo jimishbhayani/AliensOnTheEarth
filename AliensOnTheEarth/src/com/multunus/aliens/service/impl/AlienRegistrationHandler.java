@@ -1,22 +1,23 @@
 package com.multunus.aliens.service.impl;
 
 import java.io.PrintWriter;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import com.multunus.aliens.dao.oto.AlienOTO;
 import com.multunus.aliens.exception.AlienManagementException;
+import com.multunus.aliens.oto.AlienOTO;
 import com.multunus.aliens.service.IAlienRegistrationService;
 
 /**
  * Handler the Requests for Alien Registration.
  * 
  * @author Jimish
- *
+ * 
  */
 public class AlienRegistrationHandler {
 
 	private IAlienRegistrationService alienRegistrationService;
-	
+
 	private PrintWriter consoleWriter = null;
 	private Scanner consoleReader = null;
 
@@ -31,22 +32,28 @@ public class AlienRegistrationHandler {
 		consoleWriter = new PrintWriter(System.out, true);
 		consoleReader = new Scanner(System.in);
 	}
-	
+
 	/**
 	 * 
 	 * Handles Alien Registration Proocess
 	 * 
 	 */
-	public String handleAlienRegistration(){
-		
+	public String handleAlienRegistration() {
+
 		String userInput = null;
 		while (true) {
-			AlienOTO alienOTO = readAlienData();
 			try {
+				AlienOTO alienOTO = readAlienData();
 				alienRegistrationService.registerAlien(alienOTO);
 			} catch (AlienManagementException e) {
 				consoleWriter
 						.println("Something was not right, Kindly Try after Sometime");
+			} catch (InputMismatchException e) {
+				consoleWriter
+						.println("Invalid Input");
+				if (consoleReader.hasNext()) {
+					consoleReader.nextLine();
+				}
 			}
 			userInput = handlePostRegistration();
 			if ("0".equals(userInput) || "#".equals(userInput)) {
@@ -55,35 +62,33 @@ public class AlienRegistrationHandler {
 		}
 		return userInput;
 	}
-	
+
 	/**
 	 * 
 	 * Read Alien Information from Console.
 	 * 
 	 */
-	private AlienOTO readAlienData(){
+	private AlienOTO readAlienData() {
 		consoleWriter.println("Enter Following Details ");
-		AlienOTO alienOTO =new  AlienOTO();
+		AlienOTO alienOTO = new AlienOTO();
 		consoleWriter.println("Enter Code Name : ");
 		alienOTO.setCodeName(consoleReader.nextLine());
-		
+
 		consoleWriter.println("Enter Blood Color : ");
 		alienOTO.setBloodColor(consoleReader.nextLine());
-		
+
 		consoleWriter.println("Enter Home Planet : ");
 		alienOTO.setHomePlanet(consoleReader.nextLine());
-		
+
 		consoleWriter.println("Enter No Of Antennas : ");
 		alienOTO.setAntennasCount(consoleReader.nextInt());
-		
+
 		consoleWriter.println("Enter No Of Legs : ");
 		alienOTO.setLegsCount(consoleReader.nextInt());
 		consoleReader.nextLine();
 		return alienOTO;
 	}
 
-	
-	
 	/**
 	 * 
 	 * Handles Post Registration Process Flow
@@ -98,6 +103,7 @@ public class AlienRegistrationHandler {
 					.equals(userInput))) {
 				break;
 			} else {
+				System.out.println("userInput : " + userInput);
 				consoleWriter.println("Please select valid Option");
 			}
 		}
@@ -123,15 +129,15 @@ public class AlienRegistrationHandler {
 		consoleWriter.println("Press # go back to Previous Menu");
 		consoleWriter.println("Press 0 to Exit");
 	}
-	
+
 	/**
-	 *
-	 *Destroys the Reader Writer object
-	 *
-	 *This method will be called through Spring Framework
+	 * 
+	 * Destroys the Reader Writer object
+	 * 
+	 * This method will be called through Spring Framework
 	 * 
 	 */
-	public void destroy(){
+	public void destroy() {
 		consoleReader.close();
 		consoleWriter.close();
 	}
@@ -144,7 +150,8 @@ public class AlienRegistrationHandler {
 	}
 
 	/**
-	 * @param alienRegistrationService the alienRegistrationService to set
+	 * @param alienRegistrationService
+	 *            the alienRegistrationService to set
 	 */
 	public void setAlienRegistrationService(
 			IAlienRegistrationService alienRegistrationService) {

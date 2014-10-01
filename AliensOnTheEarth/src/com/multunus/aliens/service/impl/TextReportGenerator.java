@@ -4,8 +4,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import com.multunus.aliens.dao.oto.AlienOTO;
 import com.multunus.aliens.exception.ReportGenerationException;
+import com.multunus.aliens.oto.AlienOTO;
 import com.multunus.aliens.service.IReportGenerator;
 
 /**

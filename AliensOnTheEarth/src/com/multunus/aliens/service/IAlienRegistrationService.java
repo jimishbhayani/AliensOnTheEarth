@@ -2,8 +2,8 @@ package com.multunus.aliens.service;
 
 import java.util.List;
 
-import com.multunus.aliens.dao.oto.AlienOTO;
 import com.multunus.aliens.exception.AlienManagementException;
+import com.multunus.aliens.oto.AlienOTO;
 
 /**
  * This is Service Interface that defines the Alien Management functionalities 

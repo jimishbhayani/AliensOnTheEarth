@@ -2,8 +2,8 @@ package com.multunus.aliens.service;
 
 import java.util.List;
 
-import com.multunus.aliens.dao.oto.AlienOTO;
 import com.multunus.aliens.exception.ReportGenerationException;
+import com.multunus.aliens.oto.AlienOTO;
 
 /**
  * This Interface defines functionality to Generate Reports

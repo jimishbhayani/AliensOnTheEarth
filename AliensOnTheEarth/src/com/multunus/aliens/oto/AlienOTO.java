@@ -1,43 +1,26 @@
-package com.multunus.aliens.dao.oto;
+package com.multunus.aliens.oto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 /**
  * 
  * Entity Class to represent Alien Data
  * 
- * Annotated with Persistence Annotations to be used by Hibernate to Map Data Table
  * 
  * @author Jimish
  *
  */
-@Entity
-@Table(name = "T_ALIEN")
 public class AlienOTO {
 
-	@Column(name = "ALIEN_ID")
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int alienId;
 
-	@Column(name = "CODE_NAME")
 	private String codeName;
 
-	@Column(name = "BLOOD_COLOR")
 	private String bloodColor;
 
-	@Column(name = "ANTENNAS_CNT")
 	private Integer antennasCount;
 
-	@Column(name = "LEGS_CNT")
 	private Integer legsCount;
 
-	@Column(name = "HOME_PLANET")
 	private String homePlanet;
 
 	/**

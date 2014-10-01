@@ -15,8 +15,8 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 
-import com.multunus.aliens.dao.oto.AlienOTO;
 import com.multunus.aliens.exception.ReportGenerationException;
+import com.multunus.aliens.oto.AlienOTO;
 import com.multunus.aliens.service.IReportGenerator;
 
 /**
