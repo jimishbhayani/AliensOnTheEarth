@@ -1,6 +1,30 @@
 AliensOnTheEarth
 ================
 
+Change Log :
+
+1. Removed SQLite Database and related Code.
+2. Removed Hibernate and dependency Libraries.
+3. Removed other unnecessary libraries.
+
+4. Handled Exception during Alien Registration.
+
+5. Made spring-config.xml Externalized.
+Now, if any new Report Format needs to be plugged in, then it can be configured through this External file.
+This can all be altered any time to change JasperReportTemplate Path and output reports path.
+Currently this file needs to be on following  location (D:\Documents\spring-config.xml)
+
+6. Built the executable jar to run application easily.
+run application through command line using following command.
+
+java -jar AliensOnTheEarth.jar
+
+To run precompiled jar spring-config.xml needs to be on above mentioned location along with alienReportTemplate.jasper file.
+
+
+AliensOnTheEarth
+================
+
 A treaty of friendship has been signed between Aliens and Humans. The aliens are now welcome on Earth and can stay as long as they wish with the Humans. This Application is responsible to register the aliens and Generate Reports
 
 

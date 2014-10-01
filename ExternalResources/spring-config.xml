@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<bean id="alienRegistrationService"
+		class="com.multunus.aliens.service.impl.AlienRegistrationServiceImpl">
+		<property name="alienData" ref="alienData" />
+	</bean>
+
+	<bean id="alienData" class="java.util.ArrayList" scope="singleton">
+	</bean>
+
+	<bean id="alienRegistrationHandler"
+		class="com.multunus.aliens.service.impl.AlienRegistrationHandler"
+		init-method="init" destroy-method="destroy">
+		<property name="alienRegistrationService" ref="alienRegistrationService" />
+
+	</bean>
+
+	<bean id="reportGenerationHandler"
+		class="com.multunus.aliens.service.impl.ReportGenerationHandler"
+		init-method="init" destroy-method="destroy">
+		<property name="alienRegistrationService" ref="alienRegistrationService" />
+		<property name="reportGeneratorFactory" ref="reportGeneratorFactory" />
+		<property name="reportGeneratorMapper" ref="reportGeneratorMapper" />
+
+	</bean>
+
+	<bean id="textReportGenerator" class="com.multunus.aliens.service.impl.TextReportGenerator">
+		<property name="reportPath" value="D:/Documents/alienReport.txt"></property>
+	</bean>
+
+	<bean id="pdfReportGenerator" class="com.multunus.aliens.service.impl.PDFReportGenerator">
+		<property name="reportPath" value="D:/Documents/alienReport.pdf"></property>
+		<property name="reportTemplatePath" value="D:/Documents/alienReportTemplate.jasper"></property>
+	</bean>
+
+	<bean id="reportGeneratorFactory" class="com.multunus.aliens.service.impl.ReportGeneratorFactory">
+		<property name="reportGeneratorRepository" ref="reportGeneratorRepository" />
+	</bean>
+
+	<bean id="reportGeneratorRepository" class="java.util.HashMap"
+		scope="singleton">
+		<constructor-arg>
+			<map key-type="java.lang.String" value-type="com.multunus.aliens.service.IReportGenerator">
+				<entry key="1" value-ref="textReportGenerator" />
+				<entry key="2" value-ref="pdfReportGenerator" />
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="reportGeneratorMapper" class="com.multunus.aliens.service.impl.ReportGeneratorMapper">
+		<property name="reportGeneratorRepositoryMappper" ref="reportGeneratorRepositoryMappper" />
+	</bean>
+
+	<bean id="reportGeneratorRepositoryMappper" class="java.util.HashMap"
+		scope="singleton">
+		<constructor-arg>
+			<map key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="Text Report" value="1" />
+				<entry key="PDF Report" value="2" />
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="userInteraction" class="com.multunus.aliens.service.impl.ConsoleInteraction"
+		init-method="init" destroy-method="destroy">
+		<property name="alienRegistrationHandler" ref="alienRegistrationHandler" />
+		<property name="reportGenerationHandler" ref="reportGenerationHandler" />
+	</bean>
+</beans>
